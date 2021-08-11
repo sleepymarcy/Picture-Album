@@ -172,7 +172,7 @@
         </p>
         <p>
           <a href="#" class="btn btn-primary my-2" onclick="getAlbum()">Load Images</a>
-          <a href="#" class="btn btn-secondary my-2">Load Secondary Images</a>
+          <a href="#" class="btn btn-secondary my-2" onclick="getAlbum2()">Load Secondary Images</a>
         </p>
       </div>
     </section>
@@ -180,6 +180,8 @@
     <div class="album py-5 bg-light">
       <div class="container">
         <div class="row" id="row">
+        </div>
+        <div class="row" id="row2">
         </div>
       </div>
     </div>
@@ -220,6 +222,70 @@
 
     function displayAlbum(albums) {
       const row = document.querySelector("#row")
+
+      for (let photo of albums.photos) {
+        console.log(photo);
+        row.innerHTML += `
+         <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                <img
+                  src="${photo.src.large}" alt="photo"
+                  class="bd-placeholder-img card-img-top"
+                  width="100%"
+                  height="225"
+                  focusable="false"
+                  role="img"
+                />
+                <div class="card-body">
+                  <p class="card-text">
+                    This is a wider card with supporting text below as a natural
+                    lead-in to additional content. This content is a little bit
+                    longer.
+                  </p>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <div class="btn-group">
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        View
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-secondary"
+                      >
+                        Edit
+                      </button>
+                    </div>
+                    <small class="text-muted">9 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+      `}
+    }
+
+    function getAlbum2() {
+      fetch("https://api.pexels.com/v1/search?query=[dog]", {
+        method: "GET",
+        headers: {
+          Authorization: "563492ad6f9170000100000133cc219e71474711888d4c6832211c66"
+        }
+      })
+        .then(response => response.json())
+        .then(albums => {
+          console.log(albums)
+          displayAlbum2(albums)
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    }
+
+    function displayAlbum2(albums) {
+      const row2 = document.querySelector("#row2")
 
       for (let photo of albums.photos) {
         console.log(photo);
